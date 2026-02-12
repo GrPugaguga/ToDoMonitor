@@ -232,10 +232,10 @@ export default function Home() {
   if (!data) return null;
 
   return (
-    <main className="mx-auto min-h-screen max-w-lg px-4 py-5">
+    <main className="min-h-screen px-4 pt-24 pb-8">
       {/* Header */}
-      <div className="mb-5 flex items-center justify-between">
-        <h1 className="text-lg font-semibold text-slate-800">
+      <div className="mb-8 flex items-center justify-between">
+        <h1 className="text-xl font-semibold text-slate-800">
           Привет, {data.user.firstName}
         </h1>
         {addingCategory ? (

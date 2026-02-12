@@ -19,7 +19,9 @@ export default function RootLayout({
           src="https://telegram.org/js/telegram-web-app.js"
           strategy="beforeInteractive"
         />
-        {children}
+        <div className="mx-auto max-w-[430px] min-h-screen">
+          {children}
+        </div>
       </body>
     </html>
   );
