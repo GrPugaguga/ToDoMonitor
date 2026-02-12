@@ -29,7 +29,7 @@ export default function TaskRow({ task, onToggle, onDelete }: TaskRowProps) {
     <div
       ref={setNodeRef}
       style={style}
-      className={`group flex items-center gap-2 rounded-md border border-slate-100 bg-white px-3 py-2.5 transition-shadow ${
+      className={`group flex items-center gap-3 rounded-lg border border-slate-100 bg-white px-4 py-3.5 transition-shadow ${
         isDragging
           ? "shadow-md shadow-blue-200/50 z-10 opacity-90"
           : "hover:shadow-sm hover:shadow-blue-100/30"
@@ -54,7 +54,7 @@ export default function TaskRow({ task, onToggle, onDelete }: TaskRowProps) {
 
       {/* Task name */}
       <span
-        className={`flex-1 text-sm select-none ${
+        className={`flex-1 text-base select-none ${
           task.done ? "text-slate-400 line-through" : "text-slate-700"
         }`}
       >
@@ -63,7 +63,7 @@ export default function TaskRow({ task, onToggle, onDelete }: TaskRowProps) {
 
       {/* Streak */}
       {task.streak > 0 && (
-        <span className="text-xs font-medium text-blue-500 tabular-nums min-w-[1.2rem] text-center">
+        <span className="text-sm font-medium text-blue-500 tabular-nums min-w-6 text-center">
           {task.streak}
         </span>
       )}
@@ -71,7 +71,7 @@ export default function TaskRow({ task, onToggle, onDelete }: TaskRowProps) {
       {/* Checkbox */}
       <button
         onClick={() => onToggle(task.id)}
-        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-all ${
+        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded border transition-all ${
           task.done
             ? "border-blue-500 bg-blue-500 text-white"
             : "border-slate-300 hover:border-blue-400"
@@ -94,7 +94,7 @@ export default function TaskRow({ task, onToggle, onDelete }: TaskRowProps) {
       {/* Delete */}
       <button
         onClick={() => onDelete(task.id)}
-        className="ml-1 p-0.5 text-slate-200 opacity-0 group-hover:opacity-100 hover:text-red-400 transition-all"
+        className="ml-3 p-0.5 text-slate-200 opacity-0 group-hover:opacity-100 hover:text-red-400 transition-all"
         aria-label="Удалить задачу"
       >
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none">

@@ -271,7 +271,7 @@ export default function Home() {
           items={data.categories.map((c) => `cat-${c.id}`)}
           strategy={verticalListSortingStrategy}
         >
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             {data.categories.map((category) => (
               <Category
                 key={category.id}

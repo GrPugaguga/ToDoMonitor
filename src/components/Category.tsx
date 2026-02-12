@@ -97,7 +97,7 @@ export default function Category({
       }`}
     >
       {/* Category header */}
-      <div className="flex items-center gap-2 px-3 py-2.5">
+      <div className="flex items-center gap-3 px-4 py-3.5">
         {/* Drag handle */}
         {!isNew && (
           <button
@@ -172,10 +172,10 @@ export default function Category({
                 strokeLinejoin="round"
               />
             </svg>
-            <span className="text-sm font-medium text-slate-800">
+            <span className="text-base font-medium text-slate-800">
               {category.name}
             </span>
-            <span className="text-xs text-slate-300">
+            <span className="text-sm text-slate-300">
               {category.tasks.length}
             </span>
           </button>
@@ -224,12 +224,12 @@ export default function Category({
 
       {/* Tasks */}
       {!collapsed && (
-        <div className="px-2 pb-2">
+        <div className="px-3 pb-3">
           <SortableContext
             items={category.tasks.map((t) => `task-${t.id}`)}
             strategy={verticalListSortingStrategy}
           >
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1.5">
               {category.tasks.map((task) => (
                 <TaskRow
                   key={task.id}
@@ -243,7 +243,7 @@ export default function Category({
 
           {/* Add task */}
           {adding ? (
-            <div className="mt-1.5 px-1">
+            <div className="mt-2 px-1">
               <input
                 autoFocus
                 value={newTaskName}
@@ -263,7 +263,7 @@ export default function Category({
           ) : (
             <button
               onClick={() => setAdding(true)}
-              className="mt-1 flex w-full items-center justify-center gap-1 rounded-md py-1.5 text-xs text-slate-400 hover:text-blue-500 hover:bg-slate-50/50 transition-colors"
+              className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-md py-2 text-sm text-slate-400 hover:text-blue-500 hover:bg-slate-50/50 transition-colors"
             >
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                 <path
