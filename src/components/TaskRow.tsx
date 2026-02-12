@@ -94,7 +94,7 @@ export default function TaskRow({ task, onToggle, onDelete }: TaskRowProps) {
       {/* Delete */}
       <button
         onClick={() => onDelete(task.id)}
-        className="p-0.5 text-slate-200 opacity-0 group-hover:opacity-100 hover:text-red-400 transition-all"
+        className="ml-1 p-0.5 text-slate-200 opacity-0 group-hover:opacity-100 hover:text-red-400 transition-all"
         aria-label="Удалить задачу"
       >
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none">

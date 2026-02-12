@@ -24,7 +24,6 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [notTelegram, setNotTelegram] = useState(false);
   const [addingCategory, setAddingCategory] = useState(false);
-  const [newCategoryName, setNewCategoryName] = useState("");
   const [confirm, setConfirm] = useState<{
     message: string;
     action: () => void;
@@ -140,14 +139,22 @@ export default function Home() {
     [reload]
   );
 
-  const handleAddCategory = useCallback(async () => {
-    const trimmed = newCategoryName.trim();
-    if (!trimmed) return;
-    await api.createCategory(trimmed);
-    setNewCategoryName("");
-    setAddingCategory(false);
-    reload();
-  }, [newCategoryName, reload]);
+  const handleAddCategory = useCallback(
+    async (name: string) => {
+      await api.createCategory(name);
+      setAddingCategory(false);
+      reload();
+    },
+    [reload]
+  );
+
+  const handleRenameCategory = useCallback(
+    async (categoryId: number, name: string) => {
+      await api.renameCategory(categoryId, name);
+      reload();
+    },
+    [reload]
+  );
 
   const handleDragEnd = useCallback(
     async (event: DragEndEvent) => {
@@ -238,48 +245,20 @@ export default function Home() {
         <h1 className="text-xl font-semibold text-slate-800">
           Привет, {data.user.firstName}
         </h1>
-        {addingCategory ? (
-          <div className="flex items-center gap-2">
-            <input
-              autoFocus
-              value={newCategoryName}
-              onChange={(e) => setNewCategoryName(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleAddCategory();
-                if (e.key === "Escape") {
-                  setAddingCategory(false);
-                  setNewCategoryName("");
-                }
-              }}
-              onBlur={() => {
-                if (!newCategoryName.trim()) setAddingCategory(false);
-              }}
-              placeholder="Категория"
-              className="w-36 rounded-md border border-slate-200 px-2.5 py-1 text-sm outline-none focus:border-blue-400 transition-colors"
+        <button
+          onClick={() => setAddingCategory(true)}
+          className="flex items-center gap-1 rounded-md px-2.5 py-1 text-sm text-slate-400 hover:text-blue-500 hover:bg-slate-100/50 transition-colors"
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path
+              d="M7 2V12M2 7H12"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
             />
-            <button
-              onClick={handleAddCategory}
-              className="rounded-md bg-blue-500 px-3 py-1 text-xs text-white hover:bg-blue-600 transition-colors"
-            >
-              OK
-            </button>
-          </div>
-        ) : (
-          <button
-            onClick={() => setAddingCategory(true)}
-            className="flex items-center gap-1 rounded-md px-2.5 py-1 text-sm text-slate-400 hover:text-blue-500 hover:bg-slate-100/50 transition-colors"
-          >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path
-                d="M7 2V12M2 7H12"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
-            категорию
-          </button>
-        )}
+          </svg>
+          категорию
+        </button>
       </div>
 
       {/* Categories */}
@@ -301,13 +280,27 @@ export default function Home() {
                 onDeleteTask={handleDeleteTask}
                 onDeleteCategory={handleDeleteCategory}
                 onAddTask={handleAddTask}
+                onRenameCategory={handleRenameCategory}
               />
             ))}
+            {addingCategory && (
+              <Category
+                key="new-category"
+                isNew
+                category={{ id: 0, name: "", order: 0, tasks: [] }}
+                onToggleTask={handleToggleTask}
+                onDeleteTask={handleDeleteTask}
+                onDeleteCategory={handleDeleteCategory}
+                onAddTask={handleAddTask}
+                onRenameCategory={(_id, name) => handleAddCategory(name)}
+                onCancelNew={() => setAddingCategory(false)}
+              />
+            )}
           </div>
         </SortableContext>
       </DndContext>
 
-      {data.categories.length === 0 && (
+      {data.categories.length === 0 && !addingCategory && (
         <div className="mt-16 text-center text-sm text-slate-300">
           Нажмите &quot;+ категорию&quot; чтобы начать
         </div>
